@@ -21,4 +21,3 @@ TasksFilter.propTypes = {
   onFilterSelect: PropTypes.func,
   selectedFilter: PropTypes.string,
 };
-njknkjnkjnkjn
