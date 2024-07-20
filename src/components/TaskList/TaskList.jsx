@@ -1,6 +1,6 @@
 import './TaskList.css'
 import Task from '../Task/Task'
-
+import PropTypes from 'prop-types'
 export default function TaskList({ tasks, tasksFns }) {
     const taskList = tasks.map((task) => {
     return(<Task 
@@ -16,4 +16,14 @@ export default function TaskList({ tasks, tasksFns }) {
           {taskList}
         </ul>
     )
+}
+
+TaskList.propTypes = {
+    tasks: PropTypes.object,
+    tasksFns: PropTypes.array,
+}
+
+TaskList.defaultProps = {
+    tasks: {},
+    tasksFns: [],
 }

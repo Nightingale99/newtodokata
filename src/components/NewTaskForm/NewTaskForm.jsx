@@ -1,5 +1,7 @@
 import './NewTaskForm.css'
 import { useState } from 'react'
+import PropTypes from 'prop-types'
+
 export default function NewTaskForm({inputActivated}) {
 
     const [inputValue, setInputValue] = useState('');
@@ -27,4 +29,12 @@ export default function NewTaskForm({inputActivated}) {
     autoFocus/>
     </header>
   )
+}
+
+NewTaskForm.propTypes = {
+    inputActivated: PropTypes.func,
+}
+
+NewTaskForm.defaultProps = {
+    inputActivated: () => {},
 }

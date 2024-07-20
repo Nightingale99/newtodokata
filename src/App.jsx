@@ -4,8 +4,10 @@ import NewTaskForm from './components/NewTaskForm/NewTaskForm'
 import TaskList from './components/TaskList/TaskList'
 import Footer from './components/Footer/Footer'
 
-function App() {
-  const [tasks, setTasks] = useState([])
+export default function App() {
+  const [tasks, setTasks] = useState([]);
+
+  const [selectedFilter, setSelectedFilter] = useState('All');
 
   function generateKey(pre) {
     return `${ pre }_${ Math.floor(100000 + Math.random() * 900000) }`;
@@ -13,15 +15,16 @@ function App() {
 
   function inputActivated (e) {
     if (e.target.value.trim()) {
-      setTasks(tasks => [...tasks, 
+      setTasks(tasks => [ 
         {
           name: e.target.value,
           key: generateKey(e.target.value),
-          fromDate: new Date(),
+          created: new Date(),
           done: false,
           editing: false,
           filtered: false,
-        }])
+        }, ...tasks])
+        filterSelected(selectedFilter)
     }
   }
 
@@ -31,6 +34,7 @@ function App() {
 
   function taskOnDone (taskKey) {
     setTasks(tasks => tasks.map(task => task.key === taskKey ? {...task, done: !task.done} : task))
+    setTimeout(() => {filterSelected(selectedFilter)}, 500)
   }
 
   function taskOnEdit (taskKey) {
@@ -46,7 +50,8 @@ function App() {
   }
 
   function filterSelected (filterName) {
-    setTasks(tasks => tasks.map((task) => {return {...task, filtered: false};}))
+    setSelectedFilter(filterName);
+    setTasks(tasks => tasks.map((task) => {return {...task, filtered: false}}))
     if (filterName === 'Active') {
       setTasks(tasks => tasks.map(task => task.done ? {...task, filtered: true} : task))
     } else if (filterName === 'Completed') {
@@ -66,10 +71,10 @@ function App() {
       <Footer
       tasksCounter={tasks.length}
       clearCompleted={clearCompleted}
-      filterSelected={filterSelected}
+      onFilterSelect={filterSelected}
+      selectedFilter={selectedFilter}
       />
     </section>
   )
 }
 
-export default App
