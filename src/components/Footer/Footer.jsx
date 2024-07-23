@@ -1,15 +1,15 @@
 import PropTypes from 'prop-types';
-import TasksFilter from '../TasksFilter/TasksFilter.jsx';
+import TasksFilter from '../TasksFilter/TasksFilter';
 import './Footer.css';
 
-export default function Footer({
+export default function Footer({ 
   tasksCounter, clearCompleted, onFilterSelect, selectedFilter,
 }) {
   return (
         <footer className="footer">
           <span className="todo-count">{tasksCounter} items left</span>
             <TasksFilter onFilterSelect={onFilterSelect} selectedFilter={selectedFilter}/>
-          <button onClick={clearCompleted} className="clear-completed">Clear completed</button>
+          <button type='button' onClick={clearCompleted} className="clear-completed">Clear completed</button>
         </footer>
   );
 }

@@ -1,8 +1,8 @@
 import './App.css';
 import { useState } from 'react';
-import NewTaskForm from './components/NewTaskForm/NewTaskForm.jsx';
-import TaskList from './components/TaskList/TaskList.jsx';
-import Footer from './components/Footer/Footer.jsx';
+import NewTaskForm from './components/NewTaskForm/NewTaskForm';
+import TaskList from './components/TaskList/TaskList';
+import Footer from './components/Footer/Footer';
 
 export default function App() {
   const [tasks, setTasks] = useState([]);

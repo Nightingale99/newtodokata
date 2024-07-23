@@ -34,19 +34,26 @@ export default function Task({ task, tasksFns }) {
                 <span className="description">{name}</span>
                 <span className="created">{formatDistance(task.created, dateNow, { includeSeconds: true })}</span>
               </label>
-              <button onClick={() => { taskOnEdit(key); }} className="icon icon-edit"></button>
-              <button onClick={() => { taskOnDelete(key); }} className="icon icon-destroy"></button>
+              <button type='button' onClick={() => { taskOnEdit(key); }} className="icon icon-edit" />
+              <button type='button' onClick={() => { taskOnDelete(key); }} className="icon icon-destroy" />
             </div>
             <input type="text"
              className="edit"
              value={changedName}
              onChange={(e) => { setChangedName(e.target.value); }}
-             onKeyDown={(e) => { if (e.key === 'Enter') taskNameChanged(key, e.target.value); }}></input>
+             onKeyDown={(e) => { if (e.key === 'Enter') taskNameChanged(key, e.target.value); }} />
           </li>
   );
 }
 
 Task.propTypes = {
-  task: PropTypes.object,
-  tasksFns: PropTypes.array,
+  task: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    done: PropTypes.bool.isRequired,
+    editing: PropTypes.bool.isRequired,
+    key: PropTypes.string.isRequired,
+    filtered: PropTypes.bool.isRequired,
+    created: PropTypes.instanceOf(Date).isRequired,
+  }).isRequired,
+  tasksFns: PropTypes.arrayOf(PropTypes.func).isRequired,
 };

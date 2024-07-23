@@ -2,14 +2,12 @@ module.exports = {
   root: true,
   env: { browser: true, es2020: true },
   extends: [
-    'eslint:recommended',
-    'plugin:react/recommended',
-    'plugin:react/jsx-runtime',
-    'plugin:react-hooks/recommended',
-    'airbnb/base'
+    'airbnb', /*Удалил все ненужное, правила airbnb работают */
+    'prettier',
   ],
   ignorePatterns: ['dist', '.eslintrc.cjs'],
-  parserOptions: { ecmaVersion: 'latest', sourceType: 'module' },
+  parser: '@typescript-eslint/parser', /* Пришлось добавить парсер который хорошо работает с jsx, без него были ошибки */
+  parserOptions: { ecmaVersion: '2020', sourceType: 'module' },
   settings: { react: { version: '18.2' } },
   plugins: ['react-refresh'],
   rules: {
@@ -17,6 +15,10 @@ module.exports = {
     'react-refresh/only-export-components': [
       'warn',
       { allowConstantExport: true },
-    ]
+    ],
+    'react/react-in-jsx-scope': 'off',
+    'react/jsx-no-bind': 'off',
+    'jsx-a11y/label-has-associated-control': 'off',
+    'jsx-a11y/control-has-associated-label': 'off',
   },
 }

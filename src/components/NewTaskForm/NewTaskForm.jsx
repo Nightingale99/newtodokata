@@ -25,7 +25,7 @@ export default function NewTaskForm({ inputActivated }) {
     placeholder="What needs to be done?"
     onChange={inputChanged}
     value={inputValue}
-    autoFocus/>
+    />
     </header>
   );
 }
