@@ -32,6 +32,9 @@ export default function Task({ task, tasksFns }) {
   }, [timerDate])
 
   useEffect(() => {
+    if (timerDate.getTime() === 0) {
+      return undefined
+    }
     timerId.current = setInterval(() => {
       if (!timerPaused.current) {
         setTimerDate((tm) => new Date(tm - 1000))
