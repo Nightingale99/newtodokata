@@ -5,7 +5,7 @@ import './Task.css'
 
 export default function Task({ task, tasksFns, filtered = false }) {
   const { name, done, editing, key, seconds } = task
-  const [taskOnDelete, taskOnDone, taskOnEdit, taskNameChanged] = tasksFns
+  const [taskOnDelete, taskOnDone, taskOnEdit, taskNameChanged, taskNameChangeCanceled] = tasksFns
   const [changedName, setChangedName] = useState(name)
   const [timerDate, setTimerDate] = useState(new Date(seconds * 1000))
   const timerPaused = useRef(false)
@@ -100,6 +100,7 @@ export default function Task({ task, tasksFns, filtered = false }) {
         }}
         onKeyDown={(e) => {
           if (e.key === 'Enter') taskNameChanged(key, e.target.value)
+          if (e.key === 'Escape') taskNameChangeCanceled(key)
         }}
       />
     </li>

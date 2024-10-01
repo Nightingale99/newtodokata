@@ -63,6 +63,14 @@ export default function App() {
     )
   }
 
+  function taskNameChangeCanceled(taskKey) {
+    setTasks((tasksState) =>
+      tasksState.map((task) =>
+        task.key === taskKey ? { ...task, editing: false } : task,
+      ),
+    )
+  }
+
   function clearCompleted() {
     setTasks((tasksState) => tasksState.filter((task) => !task.done))
   }
@@ -72,7 +80,7 @@ export default function App() {
       <NewTaskForm inputActivated={inputActivated} />
       <TaskList
         tasks={tasks}
-        tasksFns={[taskOnDelete, taskOnDone, taskOnEdit, taskNameChanged]}
+        tasksFns={[taskOnDelete, taskOnDone, taskOnEdit, taskNameChanged, taskNameChangeCanceled]}
         selectedFilter={selectedFilter}
       />
       <Footer
