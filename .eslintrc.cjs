@@ -21,5 +21,6 @@ module.exports = {
     'react/jsx-no-bind': 'off',
     'jsx-a11y/label-has-associated-control': 'off',
     'jsx-a11y/control-has-associated-label': 'off',
+    'react/require-default-props': 'off',
   },
 }

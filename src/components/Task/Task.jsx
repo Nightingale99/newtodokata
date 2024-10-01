@@ -3,26 +3,23 @@ import { formatDistance } from 'date-fns'
 import PropTypes from 'prop-types'
 import './Task.css'
 
-export default function Task({ task, tasksFns }) {
-  const { name, done, editing, key, filtered, timer } = task
+export default function Task({ task, tasksFns, filtered = false }) {
+  const { name, done, editing, key, seconds } = task
   const [taskOnDelete, taskOnDone, taskOnEdit, taskNameChanged] = tasksFns
   const [changedName, setChangedName] = useState(name)
-  const [timerDate, setTimerDate] = useState(
-    new Date((timer.min * 60 + timer.sec) * 1000),
-  )
+  const [timerDate, setTimerDate] = useState(new Date(seconds * 1000))
   const timerPaused = useRef(false)
   const timerId = useRef(null)
 
   timerPaused.current = done
 
   let taskClass = ''
-  if (filtered) {
-    taskClass = 'hidden'
-  } else if (done) {
+  if (done) {
     taskClass = 'completed'
   } else if (editing) {
     taskClass = 'editing'
   }
+
 
   useEffect(() => {
     if (timerDate.getTime() === 0) {
@@ -44,7 +41,7 @@ export default function Task({ task, tasksFns }) {
   }, [])
 
   return (
-    <li className={taskClass}>
+    <li className={`${taskClass} ${filtered && 'hidden'}`}>
       <div className="view">
         <input
           onChange={() => {
@@ -61,12 +58,16 @@ export default function Task({ task, tasksFns }) {
             <button
               type="button"
               className="icon icon-play"
-              onClick={() => {timerPaused.current = false}}
+              onClick={() => {
+                timerPaused.current = false
+              }}
             />
             <button
               type="button"
               className="icon icon-pause"
-              onClick={() => {timerPaused.current = true}}
+              onClick={() => {
+                timerPaused.current = true
+              }}
             />
             {timerDate.getMinutes().toString().padStart(2, '0')}:
             {timerDate.getSeconds().toString().padStart(2, '0')}
@@ -106,17 +107,14 @@ export default function Task({ task, tasksFns }) {
 }
 
 Task.propTypes = {
+  filtered: PropTypes.bool,
   task: PropTypes.shape({
     name: PropTypes.string.isRequired,
     done: PropTypes.bool.isRequired,
     editing: PropTypes.bool.isRequired,
     key: PropTypes.string.isRequired,
-    filtered: PropTypes.bool.isRequired,
     created: PropTypes.instanceOf(Date).isRequired,
-    timer: PropTypes.shape({
-      min: PropTypes.number.isRequired,
-      sec: PropTypes.number.isRequired,
-    }).isRequired,
+    seconds: PropTypes.number,
   }).isRequired,
   tasksFns: PropTypes.arrayOf(PropTypes.func).isRequired,
 }

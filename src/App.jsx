@@ -15,22 +15,6 @@ export default function App() {
 
   function filterSelected(filterName) {
     setSelectedFilter(filterName)
-    setTasks((tasksState) =>
-      tasksState.map((task) => ({ ...task, filtered: false })),
-    )
-    if (filterName === 'Active') {
-      setTasks((tasksState) =>
-        tasksState.map((task) =>
-          task.done ? { ...task, filtered: true } : task,
-        ),
-      )
-    } else if (filterName === 'Completed') {
-      setTasks((tasksState) =>
-        tasksState.map((task) =>
-          !task.done ? { ...task, filtered: true } : task,
-        ),
-      )
-    }
   }
 
   function inputActivated(value) {
@@ -42,15 +26,10 @@ export default function App() {
           created: new Date(),
           done: false,
           editing: false,
-          filtered: false,
-          timer: {
-            min: value.min,
-            sec: value.sec,
-          },
+          seconds: value.min * 60 + value.sec,
         },
         ...tasksState,
       ])
-      filterSelected(selectedFilter)
     }
   }
 
@@ -64,9 +43,6 @@ export default function App() {
         task.key === taskKey ? { ...task, done: !task.done } : task,
       ),
     )
-    setTimeout(() => {
-      filterSelected(selectedFilter)
-    }, 500)
   }
 
   function taskOnEdit(taskKey) {
@@ -97,6 +73,7 @@ export default function App() {
       <TaskList
         tasks={tasks}
         tasksFns={[taskOnDelete, taskOnDone, taskOnEdit, taskNameChanged]}
+        selectedFilter={selectedFilter}
       />
       <Footer
         tasksCounter={tasks.length}
